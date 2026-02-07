@@ -2,12 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
 import heroImage from "@/assets/hero-suitcases.jpg";
 import { useReserva } from "@/context/reserva-context";
+import { formatCop } from "@/lib/utils";
 import { useEffect } from "react";
 
 const NOMBRES_TIPO = { bodega: "Maleta de bodega", cabina: "Maleta de cabina" } as const;
 
 const Resumen = () => {
-  const { maletas } = useReserva();
+  const { maletas, dias } = useReserva();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +21,8 @@ const Resumen = () => {
     return null;
   }
 
-  const total = maletas.reduce((sum, m) => sum + m.precio, 0);
+  const totalPorDia = maletas.reduce((sum, m) => sum + m.precio, 0);
+  const totalReserva = totalPorDia * dias;
 
   return (
     <div className="container py-12">
@@ -35,7 +37,7 @@ const Resumen = () => {
             <CheckCircle className="h-12 w-12 text-primary" />
             <h1 className="mt-4 text-2xl font-extrabold">Resumen de tu reserva</h1>
             <p className="mt-2 text-muted-foreground">
-              Revisa los detalles antes de pagar.
+              Revisa los detalles antes de pagar. Reserva para {dias} {dias === 1 ? "día" : "días"}.
             </p>
             <ul className="mt-6 space-y-4 text-left">
               {maletas.map((m, i) => (
@@ -47,16 +49,14 @@ const Resumen = () => {
                   <p className="text-sm text-muted-foreground">{m.caracteristica1}</p>
                   <p className="text-sm text-muted-foreground">{m.caracteristica2}</p>
                   <p className="mt-2 font-bold text-primary">
-                    {m.precio} €<span className="text-sm font-normal text-muted-foreground">/día</span>
+                    {formatCop(m.precio)}/día × {dias} {dias === 1 ? "día" : "días"} = {formatCop(m.precio * dias)} COP
                   </p>
                 </li>
               ))}
             </ul>
-            {maletas.length > 1 && (
-              <p className="mt-4 text-right text-lg font-bold">
-                Total: {total} €/día
-              </p>
-            )}
+            <p className="mt-4 text-right text-lg font-bold">
+              Total ({dias} {dias === 1 ? "día" : "días"}): {formatCop(totalReserva)} COP
+            </p>
             <Link
               to="/reservar/pago"
               className="mt-8 block w-full rounded-lg bg-accent py-2.5 text-center text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90"
@@ -67,7 +67,7 @@ const Resumen = () => {
               to="/reservar/preferencias"
               className="mt-3 block text-center text-sm text-muted-foreground hover:underline"
             >
-              Cambiar maleta(s)
+              Cambiar maleta(s) o días
             </Link>
           </div>
         </div>

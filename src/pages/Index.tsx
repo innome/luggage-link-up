@@ -1,4 +1,4 @@
-import { Briefcase, Shield, Clock } from "lucide-react";
+import { Briefcase, Shield, Clock, CalendarCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-suitcases.jpg";
 
@@ -47,29 +47,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Promesa 24h */}
-      <section className="py-12">
-        <div className="container">
-          <div className="mx-auto max-w-2xl rounded-xl border-2 border-primary/20 bg-primary/5 p-8 text-center">
-            <p className="text-lg font-semibold text-foreground">
-              La maleta estará disponible para su recogida 24 horas antes del primer día de alquiler.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* How it works */}
       <section id="como-funciona" className="py-20">
         <div className="container text-center">
           <h2 className="text-3xl font-extrabold">¿Cómo funciona?</h2>
           <p className="mx-auto mt-3 max-w-md text-muted-foreground">
-            En tres sencillos pasos tendrás la maleta perfecta para tu viaje.
+            En unos sencillos pasos tendrás la maleta perfecta para tu viaje.
           </p>
-          <div className="mt-12 grid gap-8 sm:grid-cols-3">
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { icon: Briefcase, title: "Elige tu maleta", desc: "Selecciona tamaño, estilo y fechas de alquiler." },
               { icon: Clock, title: "Recíbela a tiempo", desc: "Te la enviamos o la recoges antes de tu viaje." },
               { icon: Shield, title: "Viaja tranquilo", desc: "Seguro incluido y devolución fácil al regresar." },
+              { icon: CalendarCheck, title: "Lista 24 h antes", desc: "La maleta estará disponible para su recogida 24 horas antes del primer día de alquiler." },
             ].map((step, i) => (
               <div key={i} className="rounded-xl border border-border bg-card p-8 text-center shadow-sm transition-shadow hover:shadow-md">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">

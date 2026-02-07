@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-suitcases.jpg";
 import {
   createMaletaSeleccionada,
+  DIAS_MAX,
+  DIAS_MIN,
   getCaracteristicasYPrecio,
   useReserva,
   type TipoMaleta,
 } from "@/context/reserva-context";
-import { cn } from "@/lib/utils";
+import { cn, formatCop } from "@/lib/utils";
 
 const TIPOS: { tipo: TipoMaleta; label: string }[] = [
   { tipo: "bodega", label: "Maleta de bodega" },
@@ -45,7 +47,7 @@ const SelectorMaleta = ({
             <p className="mt-1 text-sm text-muted-foreground">{caracteristica1}</p>
             <p className="text-sm text-muted-foreground">{caracteristica2}</p>
             <p className="mt-2 text-lg font-bold text-primary">
-              {precio} €<span className="text-sm font-normal text-muted-foreground">/día</span>
+              {formatCop(precio)}<span className="text-sm font-normal text-muted-foreground"> COP/día</span>
             </p>
           </button>
         );
@@ -56,7 +58,8 @@ const SelectorMaleta = ({
 
 const Preferencias = () => {
   const navigate = useNavigate();
-  const { setMaletas } = useReserva();
+  const { setMaletas, setDias, dias } = useReserva();
+  const handleDiasChange = (e: React.ChangeEvent<HTMLInputElement>) => setDias(Number(e.target.value));
   const [selecciones, setSelecciones] = useState<(TipoMaleta | null)[]>([null]);
   const mostrarSegundoBloque = selecciones.length > 1;
 
@@ -124,6 +127,22 @@ const Preferencias = () => {
               Añadir otra maleta
             </button>
           )}
+
+          <div className="space-y-2 pt-4">
+            <label htmlFor="dias" className="block text-sm font-semibold text-foreground">
+              ¿Cuántos días quieres reservar?
+            </label>
+            <input
+              id="dias"
+              type="number"
+              min={DIAS_MIN}
+              max={DIAS_MAX}
+              value={dias}
+              onChange={handleDiasChange}
+              className="w-24 rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+            />
+            <span className="ml-2 text-sm text-muted-foreground">días (mín. {DIAS_MIN}, máx. {DIAS_MAX})</span>
+          </div>
 
           <div className="flex flex-wrap gap-4 pt-4">
             <button
