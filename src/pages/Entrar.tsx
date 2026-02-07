@@ -65,7 +65,7 @@ const Entrar = () => {
           </button>
         </form>
         <p className="mt-4 text-xs text-muted-foreground">
-          Usa el email y contraseña con los que te registraste. Los datos se guardan en tu navegador (JSON).
+          Usa el email y contraseña con los que te registraste.
         </p>
         <p className="mt-4 text-center text-sm text-muted-foreground">
           ¿No tienes cuenta?{" "}
