@@ -5,7 +5,7 @@ const Footer = () => (
     <div className="container grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
       <div>
         <p className="text-lg font-extrabold text-primary">
-          Maleta<span className="text-accent">Lista</span>
+          Maleta <span className="text-accent">Lista</span>
         </p>
         <p className="mt-2 text-sm text-muted-foreground">
           Alquila maletas de calidad sin preocuparte por el espacio.
@@ -34,7 +34,7 @@ const Footer = () => (
       </div>
     </div>
     <div className="container mt-8 border-t border-border pt-6 text-center text-xs text-muted-foreground">
-      © {new Date().getFullYear()} MaletaLista. Todos los derechos reservados.
+      © {new Date().getFullYear()} Maleta Lista. Todos los derechos reservados.
     </div>
   </footer>
 );

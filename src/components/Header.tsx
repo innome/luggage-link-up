@@ -9,7 +9,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="text-xl font-extrabold tracking-tight text-primary">
-          Maleta<span className="text-accent">Lista</span>
+          Maleta <span className="text-accent">Lista</span>
         </Link>
 
         {/* Desktop nav */}

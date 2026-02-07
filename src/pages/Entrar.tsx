@@ -5,7 +5,7 @@ const Entrar = () => (
     <div className="w-full max-w-md rounded-xl border border-border bg-card p-8 shadow-sm">
       <h1 className="text-2xl font-extrabold">Iniciar sesión</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Accede a tu cuenta de MaletaLista.
+        Accede a tu cuenta de Maleta Lista.
       </p>
       <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
         <div>

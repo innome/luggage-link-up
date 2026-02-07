@@ -5,7 +5,7 @@ const Registro = () => (
     <div className="w-full max-w-md rounded-xl border border-border bg-card p-8 shadow-sm">
       <h1 className="text-2xl font-extrabold">Crear cuenta</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Únete a MaletaLista y empieza a alquilar.
+        Únete a Maleta Lista y empieza a alquilar.
       </p>
       <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
         <div>

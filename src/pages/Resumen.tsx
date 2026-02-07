@@ -1,27 +1,79 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
+import heroImage from "@/assets/hero-suitcases.jpg";
+import { useReserva } from "@/context/reserva-context";
+import { useEffect } from "react";
 
-const Resumen = () => (
-  <div className="container flex min-h-[60vh] flex-col items-center justify-center py-16 text-center">
-    <div className="rounded-xl border border-border bg-card p-10 shadow-sm">
-      <CheckCircle className="mx-auto h-12 w-12 text-primary" />
-      <h1 className="mt-4 text-2xl font-extrabold">Resumen de tu reserva</h1>
-      <p className="mt-2 text-muted-foreground">
-        Revisa los detalles antes de confirmar.
-      </p>
-      <div className="mt-6 space-y-2 text-left text-sm">
-        <p><span className="font-medium">Maleta:</span> Cabina Clásica 20″</p>
-        <p><span className="font-medium">Precio:</span> $8/día</p>
-        <p><span className="font-medium">Entrega:</span> Recogida en punto</p>
+const NOMBRES_TIPO = { bodega: "Maleta de bodega", cabina: "Maleta de cabina" } as const;
+
+const Resumen = () => {
+  const { maletas } = useReserva();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (maletas.length === 0) {
+      navigate("/reservar/preferencias", { replace: true });
+    }
+  }, [maletas.length, navigate]);
+
+  if (maletas.length === 0) {
+    return null;
+  }
+
+  const total = maletas.reduce((sum, m) => sum + m.precio, 0);
+
+  return (
+    <div className="container py-12">
+      <div className="mx-auto max-w-xl">
+        <div className="overflow-hidden rounded-xl border border-border bg-card">
+          <img
+            src={heroImage}
+            alt="Resumen de tu selección"
+            className="h-40 w-full object-cover"
+          />
+          <div className="p-8">
+            <CheckCircle className="h-12 w-12 text-primary" />
+            <h1 className="mt-4 text-2xl font-extrabold">Resumen de tu reserva</h1>
+            <p className="mt-2 text-muted-foreground">
+              Revisa los detalles antes de pagar.
+            </p>
+            <ul className="mt-6 space-y-4 text-left">
+              {maletas.map((m, i) => (
+                <li
+                  key={`${m.tipo}-${i}`}
+                  className="rounded-lg border border-border bg-muted/30 p-4"
+                >
+                  <p className="font-semibold">{NOMBRES_TIPO[m.tipo]}</p>
+                  <p className="text-sm text-muted-foreground">{m.caracteristica1}</p>
+                  <p className="text-sm text-muted-foreground">{m.caracteristica2}</p>
+                  <p className="mt-2 font-bold text-primary">
+                    {m.precio} €<span className="text-sm font-normal text-muted-foreground">/día</span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+            {maletas.length > 1 && (
+              <p className="mt-4 text-right text-lg font-bold">
+                Total: {total} €/día
+              </p>
+            )}
+            <Link
+              to="/reservar/pago"
+              className="mt-8 block w-full rounded-lg bg-accent py-2.5 text-center text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90"
+            >
+              Pagar mi maleta
+            </Link>
+            <Link
+              to="/reservar/preferencias"
+              className="mt-3 block text-center text-sm text-muted-foreground hover:underline"
+            >
+              Cambiar maleta(s)
+            </Link>
+          </div>
+        </div>
       </div>
-      <button className="mt-8 w-full rounded-lg bg-accent py-2.5 text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90">
-        Confirmar reserva
-      </button>
-      <Link to="/reservar" className="mt-3 block text-sm text-muted-foreground hover:underline">
-        ← Cambiar maleta
-      </Link>
     </div>
-  </div>
-);
+  );
+};
 
 export default Resumen;

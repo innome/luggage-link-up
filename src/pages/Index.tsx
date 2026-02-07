@@ -35,6 +35,29 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Qué es Maleta Lista */}
+      <section className="border-t border-border bg-muted/30 py-16">
+        <div className="container">
+          <h2 className="text-center text-3xl font-extrabold">¿Qué es Maleta Lista?</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground">
+            Maleta Lista es una plataforma que conecta la <strong>oferta y la demanda</strong> de alquiler de maletas.
+            Resolvemos el problema del deterioro de las maletas por falta de espacio adecuado para su almacenamiento en los departamentos:
+            alquila la maleta que necesitas, cuando la necesitas, sin guardarla en casa.
+          </p>
+        </div>
+      </section>
+
+      {/* Promesa 24h */}
+      <section className="py-12">
+        <div className="container">
+          <div className="mx-auto max-w-2xl rounded-xl border-2 border-primary/20 bg-primary/5 p-8 text-center">
+            <p className="text-lg font-semibold text-foreground">
+              La maleta estará disponible para su recogida 24 horas antes del primer día de alquiler.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* How it works */}
       <section id="como-funciona" className="py-20">
         <div className="container text-center">
