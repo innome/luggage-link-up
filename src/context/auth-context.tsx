@@ -1,18 +1,14 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { checkPassword, readUsers } from "@/lib/user-storage";
 
-export interface MockUser {
+export interface User {
+  id: string;
   email: string;
-  password: string;
   name: string;
 }
 
-const MOCK_USERS: MockUser[] = [
-  { email: "usuario1@maletaista.com", password: "123456", name: "Carlos García" },
-  { email: "usuario2@maletaista.com", password: "123456", name: "María López" },
-];
-
 interface AuthContextType {
-  user: MockUser | null;
+  user: User | null;
   login: (email: string, password: string) => string | null;
   logout: () => void;
 }
@@ -26,20 +22,20 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<MockUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  const login = (email: string, password: string): string | null => {
-    const found = MOCK_USERS.find(
-      (u) => u.email === email && u.password === password
-    );
-    if (found) {
-      setUser(found);
-      return null;
+  const login = useCallback((email: string, password: string): string | null => {
+    const emailNorm = email.trim().toLowerCase();
+    const users = readUsers();
+    const stored = users.find((u) => u.email === emailNorm);
+    if (!stored || !checkPassword(password, stored.passwordHash)) {
+      return "Email o contraseña incorrectos.";
     }
-    return "Email o contraseña incorrectos.";
-  };
+    setUser({ id: stored.id, email: stored.email, name: stored.name });
+    return null;
+  }, []);
 
-  const logout = () => setUser(null);
+  const logout = useCallback(() => setUser(null), []);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>

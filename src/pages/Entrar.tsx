@@ -11,11 +11,14 @@ const Entrar = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const err = login(email, password);
+    setError(null);
+    const err = login(email.trim(), password);
     if (err) {
       setError(err);
     } else {
-      navigate("/");
+      window.requestAnimationFrame(() => {
+        navigate("/", { replace: true });
+      });
     }
   };
 
@@ -61,11 +64,9 @@ const Entrar = () => {
             Entrar
           </button>
         </form>
-        <div className="mt-4 rounded-lg bg-muted p-3 text-xs text-muted-foreground">
-          <p className="font-semibold mb-1">Usuarios de prueba:</p>
-          <p>usuario1@maletaista.com / 123456</p>
-          <p>usuario2@maletaista.com / 123456</p>
-        </div>
+        <p className="mt-4 text-xs text-muted-foreground">
+          Usa el email y contraseña con los que te registraste. Los datos se guardan en tu navegador (JSON).
+        </p>
         <p className="mt-4 text-center text-sm text-muted-foreground">
           ¿No tienes cuenta?{" "}
           <Link to="/registro" className="font-medium text-primary hover:underline">Registrarse</Link>
