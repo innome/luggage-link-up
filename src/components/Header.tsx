@@ -1,9 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/context/auth-context";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    setOpen(false);
+    navigate("/");
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -17,15 +26,29 @@ const Header = () => {
           <Link to="/reservar" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Alquilar
           </Link>
-          <Link to="/entrar" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-            Entrar
-          </Link>
-          <Link
-            to="/registro"
-            className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90"
-          >
-            Registrarse
-          </Link>
+          {user ? (
+            <>
+              <span className="text-sm font-medium text-foreground">{user.name}</span>
+              <button
+                onClick={handleLogout}
+                className="rounded-lg border border-border px-4 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted"
+              >
+                Salir
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/entrar" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+                Entrar
+              </Link>
+              <Link
+                to="/registro"
+                className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90"
+              >
+                Registrarse
+              </Link>
+            </>
+          )}
         </nav>
 
         {/* Mobile toggle */}
@@ -40,16 +63,27 @@ const Header = () => {
           <Link to="/reservar" onClick={() => setOpen(false)} className="text-sm font-medium text-muted-foreground">
             Alquilar
           </Link>
-          <Link to="/entrar" onClick={() => setOpen(false)} className="text-sm font-medium text-muted-foreground">
-            Entrar
-          </Link>
-          <Link
-            to="/registro"
-            onClick={() => setOpen(false)}
-            className="rounded-lg bg-accent px-4 py-2 text-center text-sm font-semibold text-accent-foreground"
-          >
-            Registrarse
-          </Link>
+          {user ? (
+            <>
+              <span className="text-sm font-medium text-foreground">{user.name}</span>
+              <button onClick={handleLogout} className="text-left text-sm font-medium text-muted-foreground">
+                Salir
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/entrar" onClick={() => setOpen(false)} className="text-sm font-medium text-muted-foreground">
+                Entrar
+              </Link>
+              <Link
+                to="/registro"
+                onClick={() => setOpen(false)}
+                className="rounded-lg bg-accent px-4 py-2 text-center text-sm font-semibold text-accent-foreground"
+              >
+                Registrarse
+              </Link>
+            </>
+          )}
         </nav>
       )}
     </header>

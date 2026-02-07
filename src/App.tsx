@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ReservaProvider } from "@/context/reserva-context";
+import { AuthProvider } from "@/context/auth-context";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -23,7 +23,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ReservaProvider>
+        <AuthProvider>
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">
@@ -40,7 +40,7 @@ const App = () => (
             </main>
             <Footer />
           </div>
-        </ReservaProvider>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
